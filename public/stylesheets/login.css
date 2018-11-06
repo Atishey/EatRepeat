@@ -108,7 +108,7 @@
 /* END Form */
 /* Demo Purposes */
 body {
-  background: #ccc;
+  /*background: #ccc;*/
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -119,7 +119,7 @@ body:before {
   top: 0;
   left: 0;
   display: block;
-  background: rgba(255, 255, 255, 0.8);
+  /*background: rgba(255, 255, 255, 0.8);*/
   width: 100%;
   height: 100%;
 }
