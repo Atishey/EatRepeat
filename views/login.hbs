@@ -3,7 +3,7 @@
 <title>
 <head>
   <meta charset="UTF-8">
-  <title>Eat Repeat</title>
+  <title>{{title}}</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
@@ -14,13 +14,12 @@
 </head>
 </title>
 
-<body background = "images/bg2.jpg">
+<body background = "/images/bg2.jpg">
   <script type="text/javascript">
-   
     function validateForm() {
-        var email = document.forms["myForm"]["Email"].value;
+        var username = document.forms["myForm"]["username"].value;
         var password = document.forms["myForm"]["password"].value;
-        if (email == "" || password == "") {
+        if (username == "" || password == "") {
             alert("must be filled out");
                 
             return false;
@@ -40,12 +39,13 @@
 <div class="form">
   <center>{{login_status}}</center>
   <br>
-  <div class="thumbnail"><img src = "images/logos.svg"/></div>
+  <div class="thumbnail"><img src = "images/logos.png"/></div>
  
   <form class="login-form" action="/login1" method="post" name="myForm" onsubmit="return validateForm()"> 
-    <input type="text" placeholder="Email" name="Email" />
+    <input type="text" placeholder="Username" name="username" autofocus />
     <input type="password" placeholder="password" name="password" id="password"/>
     <button class= "btn btn-primary" type="Submit">login</button>
+    <p class="message"> {{Status}} </p>
     <p class="message">Not registered? <a href="/signup">Create an account</a></p>
   </form>
 </div>
