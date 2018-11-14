@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var con = mysql.createConnection({
   host:'localhost',
   user: 'root',
-  password: '',
+  password: 'negiamit97',
   database: 'EatRepeat'
 });
 
@@ -38,7 +38,7 @@ router.get('/signup',function(req,res,next){
 
 //USER LOGIN
 //------------------------------------------------------------------------------------------------------------------------>
-var name;
+var name,city;
 router.post('/login1',function(req,res,next){
 	name = req.body.username;
 	var password = req.body.password;
@@ -55,7 +55,22 @@ router.post('/login1',function(req,res,next){
 			for(i=0;i<result.length;i++){
 					if(result[i].username==name && result[i].password==password) {
 						console.log('Login succesful with username: '+ name);
+						con.query({
+							sql : 'select city from Signup where username=?',
+							values : [name]
+						},function(err,res){
+							if(err) throw err;
+							else{
+								console.log(res);
+								city=res[0].city;
+							}
+						});	
+
+						console.log("USER IS FROM "+city );
+
 						val=true;
+						//	console.log("AT HOME "+name);
+						 // res.render('home',{title:'Home',User : name});
 						res.redirect('/home');
 						
 							
@@ -68,9 +83,25 @@ router.post('/login1',function(req,res,next){
 
 		
 });
+//------------------------------------------------------------------------------------------------------------------------>
 
 router.get('/home', function(req, res, next) {
-  res.render('home',{title:'Home'});
+	console.log("AT HOME "+name);
+
+	con.query({
+		sql : 'select resid,resname,address,phno,city,opentime,closetime,image,cuisine from Restuarant where city=?',
+		values : [city]
+	}, function(err,result){
+			if (err) throw err;
+			else {
+				res.render('home',{title:'Home',User : name,Data : result});	
+			}
+		});
+
+
+
+
+  
 });
 
 //------------------------------------------------------------------------------------------------------------------------>
@@ -127,6 +158,20 @@ router.post('/signup',function(req,res){
 });
 
 //-------------------------------------------------------------------------------------------------------------------------->
+//Display Resturants at Homepage from DropDown
+
+router.post('/find',function(req,res,next){
+		city=req.body.findcity;
+		res.redirect('/home');
+	}
+);
+//---------------------------------------------------------------------------------------------------------------------------->
+//Booking a reservation
+router.post('/booking',function(req,res,next){
+		res.render('booking',{title :'EatRepeat',User :name})
+	}
+);
+
 
 
 module.exports = router;
