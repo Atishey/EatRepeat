@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var con = mysql.createConnection({
   host:'localhost',
   user: 'root',
-  password: 'negiamit97',
+  password: '',
   database: 'EatRepeat'
 });
 
@@ -89,7 +89,7 @@ router.get('/home', function(req, res, next) {
 	console.log("AT HOME "+name);
 
 	con.query({
-		sql : 'select resid,resname,address,phno,city,opentime,closetime,image,cuisine from Restuarant where city=?',
+		sql : 'select resid,resname,address,phno,city,opentime,closetime,image,cuisine from Restaurant where city=?',
 		values : [city]
 	}, function(err,result){
 			if (err) throw err;
@@ -158,7 +158,7 @@ router.post('/signup',function(req,res){
 });
 
 //-------------------------------------------------------------------------------------------------------------------------->
-//Display Resturants at Homepage from DropDown
+//Display Restaurants at Homepage from DropDown
 
 router.post('/find',function(req,res,next){
 		city=req.body.findcity;
@@ -169,6 +169,13 @@ router.post('/find',function(req,res,next){
 //Booking a reservation
 router.post('/booking',function(req,res,next){
 		res.render('booking',{title :'EatRepeat',User :name})
+	}
+);
+
+//-----------------------------------------------------
+router.get('/profile',function(req,res,next){
+		var uname = req.body.username;
+		res.render('profile',{user:uname});
 	}
 );
 
