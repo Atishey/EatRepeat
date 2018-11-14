@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var con = mysql.createConnection({
   host:'localhost',
   user: 'root',
-  password: 'negiamit97',
+  password: '',
   database: 'EatRepeat'
 });
 
