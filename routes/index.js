@@ -240,7 +240,7 @@ router.get('/profile', function(req, res, next) {
 	console.log("AT HOME "+name);
 
 	con.query({
-		sql : 'select * from signup where username=?',
+		sql : 'select * from Signup where username=?',
 		values : [name]
 	}, function(err,result){
 			if (err) throw err;
@@ -255,13 +255,13 @@ router.post('/profile', function(req, res, next) {
 	console.log(req.body);
 	// console.log(req.body.city);
 	con.query({
-		sql : 'Update signup set name= ?,password= ? where username=?',
-		values : [req.body.name,req.body.password,name]
+		sql : 'Update Signup set name= ?,password= ?,city=?,phno=?,username=? where username=?',
+		values : [req.body.name,req.body.password,req.body.city,req.body.phno,req.body.uname,name]
 	}, function(err,result){
 			if (err) throw err;
 			else {
 				// console.log(result[0].username);
-				res.render('login',{Status:'Signup inofrmation updated',title:'EatRepeat'});	
+				res.render('login',{Status:'Signup information updated',title:'EatRepeat'});	
 			}
 		});  
 });

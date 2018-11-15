@@ -23,7 +23,7 @@
 	}
 
     function validateForm() {
-    	alert('h1');	
+    	alert('Changes are stored. You will be logged out now');	
         var name = document.forms["myForm"]["name"].value;
         var username = document.forms["myForm"]["username"].value;
         
@@ -43,20 +43,22 @@
     }
 }
 </script>
+
 </head>
 
 <body background="images/bg2.jpg">
+	<br> <br>
 	<div class="form">
 	<center>{{name}}'s Profile</center>	
 	<br>
 	<div class="thumbnail"><img src="images/logos.png"/></div>
 	<table>
 		<form class="login-form" action="/profile" method="post" name="myForm" onsubmit="return validateForm()">
-		<tr><td>Name</td><td> <input type="text" placeholder = "{{name}}" id="name"> </td></tr>
-		<tr><td>Username</td><td> <input type="text" placeholder = "{{username}}" id="uname"> </td></tr>
-		<tr><th>Password</th><td> <input type="text" placeholder = "{{password}}" id="password"> </td></tr>
-		<tr><th>Ph-no</th><td> <input type="text" placeholder = "{{phno}}" id="phno"> </td></tr>
-		<tr><th>City</th><td> <input type="text" placeholder = "{{city}}" id="city"> </td></tr>
+		<tr><td>Name</td><td> <input type="text" placeholder = "{{name}}" name="name" value="{{name}}"> </td></tr>
+		<tr><td>Username</td><td> <input type="text" placeholder = "{{username}}" name="uname" value="{{username}}"> </td></tr>
+		<tr><th>Password</th><td> <input type="text" placeholder = "{{password}}" name="password" value="{{password}}"> </td></tr>
+		<tr><th>Ph-no</th><td> <input type="text" placeholder = "{{phno}}" name="phno" value="{{phno}}"> </td></tr>
+		<tr><th>City</th><td> <input type="text" placeholder = "{{city}}" name="city" value="{{city}}"> </td></tr>
 		<tr><td><input type="button" id="btn1" onclick="edit()" value="Edit">
 		</td><td><button type="submit" id="btn2" value="Submit" disabled="true">Submit</td></tr>
 
