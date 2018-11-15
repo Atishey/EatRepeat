@@ -1,21 +1,67 @@
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Profile</title>
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	  <meta charset="UTF-8">
+	  <title>Profile</title>
+	  
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
-<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
-<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="stylesheets/login.css">
+	  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
+	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
+	<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" type="text/css" href="stylesheets/profile.css">
+	<script type="text/javascript">
+	function edit(){
+		alert('Now you can edit your details');
+		document.getElementById("btn2").disabled=false;
+		document.getElementById("name").value="{{name}}";
+		// document.getElementById("uname").value="{{username}}";
+		document.getElementById("password").value="{{password}}";
+		document.getElementById("phno").value="{{phno}}";
+		document.getElementById("city").value="{{city}}";
+
+	}
+
+    function validateForm() {
+    	alert('h1');	
+        var name = document.forms["myForm"]["name"].value;
+        var username = document.forms["myForm"]["username"].value;
+        
+
+        var email = document.forms["myForm"]["email"].value;
+        
+        var password = document.forms["myForm"]["password"].value;
+        
+
+        var city = document.forms["myForm"]["city"].value;
+        
+        var phno = document.forms["myForm"]["phno"].value;
+        if (name==""||username == "" || email == "" || password == "" || city == "" || phno == "") {
+            alert("Please fill all the fields");
+                
+            return false;
+    }
+}
+</script>
 </head>
 
 <body background="images/bg2.jpg">
 	<div class="form">
-  <center>Profile</center>
-  <br>
-  <div class="thumbnail"><img src="images/logos.png"/></div>
-  <p class="message"> {{user}}</p>
+	<center>{{name}}'s Profile</center>	
+	<br>
+	<div class="thumbnail"><img src="images/logos.png"/></div>
+	<table>
+		<form class="login-form" action="/profile" method="post" name="myForm" onsubmit="return validateForm()">
+		<tr><td>Name</td><td> <input type="text" placeholder = "{{name}}" id="name"> </td></tr>
+		<tr><td>Username</td><td> <input type="text" placeholder = "{{username}}" id="uname"> </td></tr>
+		<tr><th>Password</th><td> <input type="text" placeholder = "{{password}}" id="password"> </td></tr>
+		<tr><th>Ph-no</th><td> <input type="text" placeholder = "{{phno}}" id="phno"> </td></tr>
+		<tr><th>City</th><td> <input type="text" placeholder = "{{city}}" id="city"> </td></tr>
+		<tr><td><input type="button" id="btn1" onclick="edit()" value="Edit">
+		</td><td><button type="submit" id="btn2" value="Submit" disabled="true">Submit</td></tr>
+
+		</form>  
+	</table>
+	</div>
+  
 </html>
