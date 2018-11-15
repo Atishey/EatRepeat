@@ -20,9 +20,6 @@ con.connect(function(err) {
 
 
 
-
-
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('login', { title: 'EatRepeat' });
@@ -96,12 +93,7 @@ router.get('/home', function(req, res, next) {
 			else {
 				res.render('home',{title:'Home',User : name,Data : result});	
 			}
-		});
-
-
-
-
-  
+		});  
 });
 
 //------------------------------------------------------------------------------------------------------------------------>
@@ -173,12 +165,35 @@ router.post('/booking',function(req,res,next){
 );
 
 //-----------------------------------------------------
-router.get('/profile',function(req,res,next){
-		var uname = req.body.username;
-		res.render('profile',{user:uname});
-	}
-);
+router.get('/profile', function(req, res, next) {
+	console.log("AT HOME "+name);
 
+	con.query({
+		sql : 'select * from signup where username=?',
+		values : [name]
+	}, function(err,result){
+			if (err) throw err;
+			else {
+				// console.log(result[0].username);
+				res.render('profile',{title:'User Profile',name:result[0].name,username:result[0].username,password:result[0].password,phno:result[0].phno,city:result[0].city,address:result[0].address});	
+			}
+		});  
+});
+// -------------------------------------------------------------------------
+router.post('/profile', function(req, res, next) {	
+	console.log(req.body);
+	// console.log(req.body.city);
+	con.query({
+		sql : 'Update signup set name= ?,password= ? where username=?',
+		values : [req.body.name,req.body.password,name]
+	}, function(err,result){
+			if (err) throw err;
+			else {
+				// console.log(result[0].username);
+				res.render('login',{Status:'Signup inofrmation updated',title:'EatRepeat'});	
+			}
+		});  
+});
 
 
 module.exports = router;
