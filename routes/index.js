@@ -3,13 +3,15 @@ var router = express.Router();
 var bodyParser= require('body-parser');
 var app= express();
 var mysql= require('mysql');
+var random = require('random-number');
+var current_date = require('current-date');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var con = mysql.createConnection({
   host:'localhost',
   user: 'root',
-  password: '',
+  password: 'negiamit97',
   database: 'EatRepeat'
 });
 
@@ -19,6 +21,11 @@ con.connect(function(err) {
 });
 
 
+var gen = random.generator({
+  	min:  1,
+ 	max:  200,
+ 	integer: true
+});
 
 
 
@@ -89,7 +96,7 @@ router.get('/home', function(req, res, next) {
 	console.log("AT HOME "+name);
 
 	con.query({
-		sql : 'select resid,resname,address,phno,city,opentime,closetime,image,cuisine from Restaurant where city=?',
+		sql : 'select resid,resname,address,phno,city,opentime,closetime,image,cuisine from Restuarant where city=?',
 		values : [city]
 	}, function(err,result){
 			if (err) throw err;
@@ -167,10 +174,74 @@ router.post('/find',function(req,res,next){
 );
 //---------------------------------------------------------------------------------------------------------------------------->
 //Booking a reservation
+var resid;
 router.post('/booking',function(req,res,next){
+		resid=req.body.RESID;
+		console.log("You are booking restuarant with id = "+resid);
 		res.render('booking',{title :'EatRepeat',User :name})
 	}
 );
+
+//Take user input to make the reservation
+router.post('/getdata',function(req,res,next){
+	var booking_id=gen(5);
+	booking_id=booking_id*gen(5)+gen(5);
+
+			con.query({
+						sql : 'insert into booking (booking_id,resid,username,name,date,time,seats,email) values (?,?,?,?,?,?,?,?)',
+						values : [booking_id,resid,name,req.body.Name,req.body.date,req.body.time,req.body.seats,req.body.email]
+						
+						},function(err,result){
+							if(err) throw err;
+							else{
+								console.log("Record inserted");
+								res.render("booking",{status :"Reservation was succesful",User :name});
+							}
+						});	
+	}
+);
+//------------------------------------------------------------------------------------------------------->
+//Display the reservations made
+router.get('/reservations', function(req, res, next) {
+	console.log("AT HOME "+name);
+
+	con.query({
+		sql : 'select r.resid,r.resname,date,time,seats,name,image,cuisine,address,booking_id,phno from Restuarant r,booking b where r.resid=b.resid and b.username=? and date >= ?',
+		values : [name,current_date('date')]
+	}, function(err,result){
+			if (err) throw err;
+			else {
+				con.query({
+				sql : 'select r.resid,r.resname,date,time,seats,name,image,cuisine,address,booking_id,phno from Restuarant r,booking b where r.resid=b.resid and b.username=? and date < ?',
+				values : [name,current_date('date')]
+			}, function(err,result2){
+			if (err) throw err;
+			else{
+				console.log(JSON.stringify(result));
+				res.render("reservation",{title:"EatRepeat",User: name,data1 :result,data2:result2});
+			}
+
+			 });
+		}}); 
+		
+});
+//------------------------------------------------------------------------------------------------------->
+//Cancel Reservation
+router.post('/cancel',function(req,res,next){
+	var id=req.body.cancel;
+	con.query({
+						sql : 'delete from booking where booking_id=?',
+						values : [id]
+						
+						},function(err,result){
+							if(err) throw err;
+							else{
+								console.log("Record deleted");
+								res.redirect("/reservations");
+							}
+						});	
+});
+
 
 //-----------------------------------------------------
 router.get('/profile',function(req,res,next){
