@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var con = mysql.createConnection({
   host:'localhost',
   user: 'root',
-  password: 'negiamit97',
+  password: '',
   database: 'EatRepeat'
 });
 
@@ -169,8 +169,9 @@ router.post('/find',function(req,res,next){
 var resid;
 router.post('/booking',function(req,res,next){
 		resid=req.body.RESID;
+		todaydate=current_date('date');
 		console.log("You are booking restuarant with id = "+resid);
-		res.render('booking',{title :'EatRepeat',User :name})
+		res.render('booking',{title :'EatRepeat',User :name,date :todaydate})
 	}
 );
 
@@ -198,13 +199,13 @@ router.get('/reservations', function(req, res, next) {
 	console.log("AT HOME "+name);
 
 	con.query({
-		sql : 'select r.resid,r.resname,date,time,seats,name,image,cuisine,address,booking_id,phno from Restuarant r,booking b where r.resid=b.resid and b.username=? and date >= ?',
+		sql : 'select r.resid,r.resname,date,time,seats,name,image,cuisine,address,booking_id,phno from Restuarant r,booking b where r.resid=b.resid and b.username=? and date >= ? order by date',
 		values : [name,current_date('date')]
 	}, function(err,result){
 			if (err) throw err;
 			else {
 				con.query({
-				sql : 'select r.resid,r.resname,date,time,seats,name,image,cuisine,address,booking_id,phno from Restuarant r,booking b where r.resid=b.resid and b.username=? and date < ?',
+				sql : 'select r.resid,r.resname,date,time,seats,name,image,cuisine,address,booking_id,phno from Restuarant r,booking b where r.resid=b.resid and b.username=? and date < ? order by date',
 				values : [name,current_date('date')]
 			}, function(err,result2){
 			if (err) throw err;

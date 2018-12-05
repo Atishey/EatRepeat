@@ -3,7 +3,7 @@
 	  <meta charset="UTF-8">
 	  <title>Profile</title>
 	  
-	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> 
 
 	  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
 	<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
@@ -51,7 +51,7 @@
 	<div class="form">
 	<center>{{name}}'s Profile</center>	
 	<br>
-	<div class="thumbnail"><img src="images/logos.png"/></div>
+	<div class="thumbnail"><a href="/home"><img src="images/logos.png"/></a></div>
 	<table>
 		<form class="login-form" action="/profile" method="post" name="myForm" onsubmit="return validateForm()">
 		<tr><td>Name</td><td> <input type="text" placeholder = "{{name}}" name="name" value="{{name}}"> </td></tr>

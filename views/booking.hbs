@@ -1,5 +1,6 @@
 <head>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -16,7 +17,8 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous"> 
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -26,6 +28,50 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="stylesheets/css/booking.css">
+
+
+   <script type="text/javascript">
+       function test() {
+
+  var element = document.getElementById("time").value;
+  
+  if (element == "") {
+  alert("Please Enter Time");
+    return false;  
+  }
+  else {
+  
+  // get system local time
+  var d = new Date();
+  var m = d.getMinutes();
+  var h = d.getHours();
+  if(h == '0') {h = 24}
+  
+  var currentTime = h+"."+m;
+  console.log(currentTime);
+ 
+  // get input time
+  var time = element.split(":");
+  var hour = time[0];
+  if(hour == '00') {hour = 24}
+  var min = time[1];
+  
+  var inputTime = hour+"."+min;
+  console.log(inputTime);
+  
+  var totalTime = currentTime - inputTime;
+  console.log(totalTime);
+  if(totalTime<0)
+        return true;
+else{
+        alert("Insert valid time");
+        return false;
+}
+}
+
+}
+   </script>
+
 </head>
 
 
@@ -60,7 +106,11 @@
 
 
 <body class="hm-gradient">
-   
+
+
+
+
+
 
     <form method="post" action="/getdata" name="resdata">
     <main>
@@ -84,18 +134,18 @@
                             
                             </div>
                             <div class="md-form">
-                                <i class="fas fa-chair prefix white-text"></i>
-                                <input type="int" id="defaultForm-pass1" class="form-control" placeholder="Seats" name="seats">
+                                <i class="fa fa-birthday-cake prefix white-text"></i>
+                                <input type="number" id="defaultForm-pass1" class="form-control" placeholder="Seats" name="seats">
                                 
                             </div>
                              <div class="md-form">
                                 <i class="fa fa-calendar-check-o prefix white-text"></i>
-                                <input type="date" id="defaultForm-pass1" class="form-control" placeholder="Date" name="date">
+                                <input type="date" id="defaultForm-pass1" class="form-control" placeholder="Date" name="date" min="{{date}}">
                                 
                             </div>
                             <div class="md-form">
                                 <i class="far fa-clock prefix white-text"></i>
-                                <input type="time" id="defaultForm-pass1" class="form-control" placeholder="Time" name="time">
+                                <input type="time" id="time" class="form-control" placeholder="Time" name="time" onblur="test()">
                                
                             </div>
 
